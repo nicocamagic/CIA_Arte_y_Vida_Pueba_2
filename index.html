@@ -312,7 +312,11 @@
                 <h1>CIA - Compañía Arte y Vida</h1>
             </center>
             <nav aria-label="Navegación principal">
-                <ul>
+                <button id="menu-toggle" aria-label="Abrir menú" aria-expanded="false"
+                    style="background:none;border:none;color:#22d3ee;font-size:2rem;cursor:pointer;display:none;">
+                    &#9776;
+                </button>
+                <ul id="main-menu" style="transition:max-height 0.4s;overflow:hidden;">
                     <li><a href="#acerca">Acerca de</a></li>
                     <li><a href="#eventos">Eventos</a></li>
                     <li><a href="#FILBO2025">FILBO2025</a></li>
@@ -320,6 +324,57 @@
                     <li><a href="admin.html" aria-label="Área administrativa">Área Administrativa</a></li>
                 </ul>
             </nav>
+            <script>
+                // Mostrar botón solo en móvil
+                function handleMenuDisplay() {
+                    const btn = document.getElementById('menu-toggle');
+                    const menu = document.getElementById('main-menu');
+                    if (window.innerWidth <= 640) {
+                        btn.style.display = 'inline-block';
+                        menu.style.maxHeight = btn.getAttribute('aria-expanded') === 'true' ? menu.scrollHeight + 'px' : '0';
+                    } else {
+                        btn.style.display = 'none';
+                        menu.style.maxHeight = 'none';
+                    }
+                }
+                document.getElementById('menu-toggle').addEventListener('click', function () {
+                    const menu = document.getElementById('main-menu');
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    menu.style.maxHeight = !expanded ? menu.scrollHeight + 'px' : '0';
+                });
+                window.addEventListener('resize', handleMenuDisplay);
+                document.addEventListener('DOMContentLoaded', handleMenuDisplay);
+            </script>
+            <style>
+                @media (max-width: 640px) {
+                    nav ul#main-menu {
+                        flex-direction: column;
+                        gap: 0.75rem;
+                        max-height: 0;
+                        padding: 0;
+                        margin: 0;
+                        background: rgba(15, 23, 42, 0.95);
+                        border-radius: 10px;
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                    }
+
+                    nav ul#main-menu li {
+                        width: 100%;
+                        text-align: center;
+                    }
+
+                    nav ul#main-menu li a {
+                        display: block;
+                        padding: 1rem 0;
+                    }
+
+                    #menu-toggle {
+                        display: inline-block !important;
+                        margin-bottom: 0.5rem;
+                    }
+                }
+            </style>
         </header>
         <main>
             <section id="acerca" tabindex="0" aria-label="Acerca de CIA">
